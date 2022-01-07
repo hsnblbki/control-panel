@@ -6,11 +6,14 @@ const { template } = require('lodash');
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+  'index' :                 './src/index.js',
+  'assets/js/banner':     './src/assets/js/banner.js'
+  },
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: '[name].js',
     publicPath:"/",
   },
 
@@ -39,7 +42,8 @@ module.exports = {
       },
 
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        test: /\.(svg|woff|woff2|eot|ttf|otf)$/i,
+        exclude: /images/,
         use: [
           {
             loader: 'file-loader',
@@ -51,13 +55,50 @@ module.exports = {
         ],
       },
 
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+
     ],
   },
 
   plugins: [
+
     new HtmlWebpackPlugin({
         filename:'index.html',
         template:'./src/index.html',
+        chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'components/button.html',
+      template:'./src/components/button.html',
+      chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'components/textfield.html',
+      template:'./src/components/textfield.html',
+      chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'components/card.html',
+      template:'./src/components/card.html',
+      chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'components/banner.html',
+      template:'./src/components/banner.html',
+      chunks:['index', 'assets/js/banner'],
     }),
 
     new CleanWebpackPlugin(),
