@@ -1,0 +1,36 @@
+$indicator-size:10px;
+
+.c-actions{
+@include e-card;
+width:100%;
+padding:0 spacing("extra-small");
+list-style: none;
+}
+
+.c-action{
+    display: flex;
+    align-items: center;
+    border-bottom:1px solid rgba(darken($color-brand,40%),0.1);
+    padding:spacing("extra-small");
+
+    &:last-child{
+        border-bottom:0;
+    }
+}
+
+.c-action__title{
+    margin-left:auto;
+    display:flex;
+    align-items: center;
+    font-size:14px;
+
+    &::before{
+        content:"";
+        width:$indicator-size;
+        height:$indicator-size;
+        border-radius:$indicator-size/2;
+        margin-left:spacing();
+        display:block;
+        background-color:$color-brand;
+    }
+}
