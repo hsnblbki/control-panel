@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
 const { template } = require('lodash');
 const path = require('path');
 
@@ -87,7 +88,38 @@ module.exports = {
     new HtmlWebpackPlugin({
         filename:'index.html',
         template:'./src/index.html',
-        chunks:['index'],
+        chunks:['index','assets/js/chart','assets/js/banner','assets/js/tabs'],
+    }),
+
+    
+    new HtmlWebpackPlugin({
+      filename:'add-product.html',
+      template:'./src/add-product.html',
+      chunks:['index','assets/js/upload'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'products.html',
+      template:'./src/products.html',
+      chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'users.html',
+      template:'./src/users.html',
+      chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'orders.html',
+      template:'./src/orders.html',
+      chunks:['index'],
+    }),
+
+    new HtmlWebpackPlugin({
+      filename:'add-user.html',
+      template:'./src/add-user.html',
+      chunks:['index','assets/js/upload'],
     }),
 
     new HtmlWebpackPlugin({
@@ -175,6 +207,43 @@ module.exports = {
     }),
 
     new CssMinimizerPlugin(),
+
+    new HtmlWebpackPartialsPlugin({
+      path:path.join(__dirname,'./src/components/help.html'),
+      location:'help',
+      template_filename: ['index.html','add-product.html','products.html','users.html','orders.html','add-user.html'],
+    }),
+
+    new HtmlWebpackPartialsPlugin({
+      path:path.join(__dirname,'./src/components/sidebar.html'),
+      location:'sidebar',
+      template_filename: ['index.html','add-product.html','products.html','users.html','orders.html','add-user.html'],
+    }),
+
+    new HtmlWebpackPartialsPlugin({
+      path:path.join(__dirname,'./src/components/actions.html'),
+      location:'actions',
+      template__filename: ['index.html'],
+    }),
+
+    new HtmlWebpackPartialsPlugin({
+      path:path.join(__dirname,'./src/components/banner.html'),
+      location:'banner',
+      template__filename: ['index.html'],
+    }),
+
+    new HtmlWebpackPartialsPlugin({
+      path:path.join(__dirname,'./src/components/chart.html'),
+      location:'chart',
+      template__filename: ['index.html'],
+    }),
+
+    new HtmlWebpackPartialsPlugin({
+      path:path.join(__dirname,'./src/components/tabs.html'),
+      location:'tabs',
+      template__filename: ['index.html'],
+    }),
 ],
+
 
 };
